@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+    {% include 'header.html.twig' %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="jumbotron">
+                    <div><img class="icon" src="{{ asset('assets/img/steem-mention.png') }}"></div>
+                    <h1>Steem Mention</h1>
+                    <p>Get steemit notificaionts through Email.</p>
+                    <p>
+                        <a class="btn btn-primary btn-lg" href="{{url('user_login')}}">Start</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+<style type="text/css">
+    .jumbotron {
+        background-color: inherit !important;
+        text-align: center;
+    }
+    .icon {
+        width: 18%;
+    }
+</style>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+    </script>
+{% endblock %}

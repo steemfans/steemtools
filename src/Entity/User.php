@@ -27,6 +27,11 @@ class User
     private $username;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $setting;
+
+    /**
      * @ORM\Column(type="string", length=8, nullable=true)
      */
     private $authcode;
@@ -40,6 +45,11 @@ class User
      * @ORM\Column(type="integer")
      */
     private $created_at;
+
+    public function __construct()
+    {
+        $this->setCreatedAt(time());
+    }
  
     /**
     * Gets the value of id.
@@ -171,5 +181,27 @@ class User
     public function setCreatedAt($created_at)
     {
         $this->created_at = $created_at;
+    }
+ 
+    /**
+    * Gets the value of setting.
+    *
+    * @return mixed
+    */
+    public function getSetting()
+    {
+        return $this->setting;
+    }
+ 
+    /**
+    * Sets the value of setting.
+    *
+    * @param mixed $setting the setting
+    *
+    * @return self
+    */
+    public function setSetting($setting)
+    {
+        $this->setting = $setting;
     }
 }
