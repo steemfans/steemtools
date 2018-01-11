@@ -42,6 +42,11 @@ class User
     private $expired_at;
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $last_mentioned_at;
+
+    /**
      * @ORM\Column(type="integer")
      */
     private $created_at;
@@ -49,6 +54,7 @@ class User
     public function __construct()
     {
         $this->setCreatedAt(time());
+        $this->setLastMentionedAt(time());
     }
  
     /**
@@ -203,5 +209,27 @@ class User
     public function setSetting($setting)
     {
         $this->setting = $setting;
+    }
+ 
+    /**
+    * Gets the value of last_mentioned_at.
+    *
+    * @return mixed
+    */
+    public function getLastMentionedAt()
+    {
+        return $this->last_mentioned_at;
+    }
+ 
+    /**
+    * Sets the value of last_mentioned_at.
+    *
+    * @param mixed $last_mentioned_at the last mentioned at
+    *
+    * @return self
+    */
+    public function setLastMentionedAt($last_mentioned_at)
+    {
+        $this->last_mentioned_at = $last_mentioned_at;
     }
 }
