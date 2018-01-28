@@ -1,5 +1,6 @@
 FROM alpine:latest
 WORKDIR /app
+COPY . /app
 ENV APP_ENV prod
 RUN apk add --no-cache \
         python3 \
@@ -41,7 +42,6 @@ RUN apk add --no-cache \
 	    php7-mysqli
 RUN pip3 install requests && \
         pip3 install -U git+git://github.com/Netherdrake/steem-python && \
-        git clone https://github.com/ety001/steem-mention.git && \
         cd /app/steem-mention && \
         php composer.phar install --no-dev --optimize-autoloader
 CMD ['php -S 0.0.0.0:80 -t /app/steem-mention/public']
