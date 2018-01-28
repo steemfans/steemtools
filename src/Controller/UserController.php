@@ -62,9 +62,10 @@ class UserController extends Controller
             }
             $cache->set('send_time_'.md5($email), $send_time++);
 
+            $sys_email = getenv('SYS_EMAIL');
             // send email
             $message = (new \Swift_Message('Your authcode from Steem Mention!'))
-                ->setFrom('steemit@mypi.win')
+                ->setFrom($sys_email)
                 ->setTo($email)
                 ->setBody(
                     $this->renderView(
