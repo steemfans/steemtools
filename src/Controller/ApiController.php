@@ -33,29 +33,34 @@ class ApiController extends Controller
         ]);
 
         if ($user) {
-            $email = $user->getEmail();
-            $reply_url = 'https://steemit.com/'.$parent_permlink.'/@'.$author.'/'.$permlink;
-            
-            $sys_email = getenv('SYS_EMAIL');
-            // send email
-            $message = (new \Swift_Message('[SteemMention] You have a NEW reply!'))
-                ->setFrom($sys_email)
-                ->setTo($email)
-                ->setBody(
-                    $this->renderView(
-                        'emails/reply.html.twig',
-                        [
-                            'reply_url' => $reply_url,
-                            'author' => $author,
-                            'parent_author' => $parent_author,
-                        ]
-                    ),
-                    'text/html'
-                );
-            $mailer->send($message);
-            
-            $result = 'get ' . $parent_author . ' and sent an email to ' . $email;
-            $code = 1;
+            $settings = json_decode( $user->getSetting() );
+            if ( isset($settings['replies']) && $settings['replies'] == 'on') {
+                $email = $user->getEmail();
+                $reply_url = 'https://steemit.com/'.$parent_permlink.'/@'.$author.'/'.$permlink;
+                
+                $sys_email = getenv('SYS_EMAIL');
+                // send email
+                $message = (new \Swift_Message('[SteemMention] You have a NEW reply!'))
+                    ->setFrom($sys_email)
+                    ->setTo($email)
+                    ->setBody(
+                        $this->renderView(
+                            'emails/reply.html.twig',
+                            [
+                                'reply_url' => $reply_url,
+                                'author' => $author,
+                                'parent_author' => $parent_author,
+                            ]
+                        ),
+                        'text/html'
+                    );
+                $mailer->send($message);
+                $result = 'get ' . $parent_author . ' and sent an email to ' . $email;
+                $code = 1;
+            } else {
+                $result = 'get ' . $parent_author;
+                $code = 0;
+            }
         } else {
             $result = $parent_author . ' is not in db.';
             $code = -1;
