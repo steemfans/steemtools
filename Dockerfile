@@ -8,7 +8,7 @@ RUN apk add --no-cache \
         gcc \
         python3-dev \
         musl-dev \
-        openssl-dev \
+        openssl-dev
 RUN pip3 install requests && \
         pip3 install -U git+git://github.com/Netherdrake/steem-python
 CMD ['python3 /app/bots.py']
