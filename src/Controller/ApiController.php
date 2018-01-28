@@ -33,7 +33,7 @@ class ApiController extends Controller
         ]);
 
         if ($user) {
-            $settings = json_decode( $user->getSetting() );
+            $settings = json_decode( $user->getSetting() , true );
             if ( isset($settings['replies']) && $settings['replies'] == 'on') {
                 $email = $user->getEmail();
                 $reply_url = 'https://steemit.com/'.$parent_permlink.'/@'.$author.'/'.$permlink;
