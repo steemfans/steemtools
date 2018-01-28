@@ -35,7 +35,41 @@ SYS_EMAIL=notice@steem-mention.com # Set the system email
 ```
 $ php bin/console doctrine:schema:update --force
 ```
-5. Run the block watcher
+5. Add nginx configuration
+```
+server
+{
+  listen 80;
+  server_name steem-mention.test; # Replace your domain
+  root  /Users/ety001/Workspace/wwwroot/steem-mention/public; # Replace your WEB public folder
+
+  location / {
+    try_files $uri /index.php$is_args$args;
+  }
+
+  location ~ ^/index\.php(/|$)
+  {
+    fastcgi_pass  172.20.0.3:9000;  # Replace your php-fpm path
+    fastcgi_split_path_info ^(.+\.php)(/.*)$;
+    include fastcgi.conf;
+    fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+    fastcgi_param DOCUMENT_ROOT $realpath_root;
+  }
+
+  location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$
+  {
+    expires      30d;
+  }
+
+  location ~ .*\.(js|css)?$
+  {
+    expires      12h;
+  }
+
+  access_log off;
+}
+```
+6. Run the block watcher
 ```
 $ export API_URL=YOUR_HOST_URL/api/block/watcher  # set the api_url in watcher
 $ python3 watcher/bots.py # run the watcher
