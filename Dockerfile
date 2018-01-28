@@ -42,7 +42,7 @@ RUN apk add --no-cache \
 	    php7-mysqli
 RUN pip3 install requests && \
         pip3 install -U git+git://github.com/Netherdrake/steem-python && \
-        cd /app/steem-mention && \
+        cd /app && \
         php composer.phar install --no-dev --optimize-autoloader
-CMD ['php -S 0.0.0.0:80 -t /app/steem-mention/public']
+CMD ['php -S 0.0.0.0:80 -t /app/public']
 
