@@ -60,8 +60,8 @@ def run():
     b = Blockchain(s)
 
     while True:
-        last_irreversible_block_num = b.info()['last_irreversible_block_num']
-        end_block_num = int(last_irreversible_block_num)
+        head_block_number = b.info()['head_block_number']
+        end_block_num = int(head_block_number)
         if start_block_num == 0:
             start_block_num = end_block_num - 3
         if start_block_num >= end_block_num:
