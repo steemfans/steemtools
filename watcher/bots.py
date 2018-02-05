@@ -13,11 +13,11 @@ if api_url == None:
     print("Please set API_URL env")
     sys.exit()
 print(api_url)
-work_num = env_dist.get('WORK_NUM')
-if work_num == None:
-    work_num = 5
-print('Work num: %s' % (work_num))
-work_num = int(work_num)
+worker_num = env_dist.get('WORKER_NUM')
+if worker_num == None:
+    worker_num = 5
+print('Worker num: %s' % (worker_num))
+worker_num = int(worker_num)
 env_block_num = env_dist.get('BLOCK_NUM')
 if env_block_num == None:
     start_block_num = 0
@@ -35,7 +35,7 @@ def worker(start, end):
     global s, b
     print('start from {start} to {end}'.format(start=start, end=end))
     block_infos = s.get_blocks(range(start, end+1))
-    print(block_infos)
+    # print(block_infos)
     for block_info in block_infos:
         transactions = block_info['transactions']
         for trans in transactions:
@@ -44,7 +44,11 @@ def worker(start, end):
                 if op[0] == 'comment' and op[1]['parent_author'] != '':
                     postdata = json.dumps(op[1])
                     r = requests.post(api_url, data=postdata)
-                    print(r.text)
+                    print('{start}:{end}: {result}'.format(
+                        start=start,
+                        end=end,
+                        result=r.text)
+                        )
 
 def run():
     global start_block_num
@@ -60,7 +64,7 @@ def run():
         end_block_num = int(last_irreversible_block_num)
         if start_block_num == 0:
             start_block_num = end_block_num - 3
-        with futures.ThreadPoolExecutor(max_workers=work_num) as executor:
+        with futures.ThreadPoolExecutor(max_workers=worker_num) as executor:
             executor.submit(worker, start_block_num, end_block_num)
         start_block_num = end_block_num
         time.sleep(3)
