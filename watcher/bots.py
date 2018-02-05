@@ -6,12 +6,18 @@ from concurrent import futures
 from steem.blockchain import Blockchain
 from steem.steemd import Steemd
 
+
 env_dist = os.environ
 api_url = env_dist.get('API_URL')
 if api_url == None:
     print("Please set API_URL env")
     sys.exit()
 print(api_url)
+work_num = env_dist.get('WORK_NUM')
+if work_num == None:
+    work_num = 5
+print('Work num: %s' % (work_num))
+work_num = int(work_num)
 env_block_num = env_dist.get('BLOCK_NUM')
 if env_block_num == None:
     start_block_num = 0
@@ -54,7 +60,7 @@ def run():
         end_block_num = int(last_irreversible_block_num)
         if start_block_num == 0:
             start_block_num = end_block_num - 3
-        with futures.ThreadPoolExecutor(max_workers=2) as executor:
+        with futures.ThreadPoolExecutor(max_workers=work_num) as executor:
             executor.submit(worker, start_block_num, end_block_num)
         start_block_num = end_block_num
         time.sleep(3)
