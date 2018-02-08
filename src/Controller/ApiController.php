@@ -27,8 +27,8 @@ class ApiController extends Controller
         $body = isset($data['body']) ? $data['body'] : null;
         $json_metadata = isset($data['json_metadata']) ? $data['json_metadata'] : null;
 
-        if ($parent_author == $author) {
-            $result = 'not_mention_yourself';
+        if (trim($parent_author) === trim($author)) {
+            $result = 'not_mention_yourself:'.$parent_author.':'.$author;
             $code = -2;
         } else {
             $em = $this->getDoctrine()->getManager();
@@ -41,7 +41,6 @@ class ApiController extends Controller
                 if ( isset($settings['replies']) && $settings['replies'] == 'on') {
                     $email = $user->getEmail();
                     $reply_url = 'https://steemit.com/'.$parent_permlink.'/@'.$author.'/'.$permlink;
-                    
                     $sys_email = getenv('SYS_EMAIL');
                     // send email
                     $message = (new \Swift_Message('[SteemMention] You have a NEW reply!'))
