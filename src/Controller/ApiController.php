@@ -39,28 +39,34 @@ class ApiController extends Controller
             if ($user) {
                 $settings = json_decode( $user->getSetting() , true );
                 if ( isset($settings['replies']) && $settings['replies'] == 'on') {
-                    $email = $user->getEmail();
-                    $reply_url = 'https://steemit.com/'.$parent_permlink.'/@'.$author.'/'.$permlink;
-                    $sys_email = getenv('SYS_EMAIL');
-                    // send email
-                    $message = (new \Swift_Message('[SteemMention] You have a NEW reply!'))
-                        ->setFrom($sys_email)
-                        ->setTo($email)
-                        ->setBody(
-                            $this->renderView(
-                                'emails/reply.html.twig',
-                                [
-                                    'reply_url' => $reply_url,
-                                    'author' => $author,
-                                    'parent_author' => $parent_author,
-                                    'body' => $body,
-                                ]
-                            ),
-                            'text/html'
-                        );
-                    $mailer->send($message);
-                    $result = 'get ' . $parent_author . ' and sent an email to ' . $email;
-                    $code = 1;
+                    try {
+                        $email = $user->getEmail();
+                        $reply_url = 'https://steemit.com/'.$parent_permlink.'/@'.$author.'/'.$permlink;
+                        $sys_email = getenv('SYS_EMAIL');
+                        // send email
+                        $message = (new \Swift_Message('[SteemMention] You have a NEW reply!'))
+                            ->setFrom($sys_email)
+                            ->setTo($email)
+                            ->setBody(
+                                $this->renderView(
+                                    'emails/reply.html.twig',
+                                    [
+                                        'reply_url' => $reply_url,
+                                        'author' => $author,
+                                        'parent_author' => $parent_author,
+                                        'body' => $body,
+                                    ]
+                                ),
+                                'text/html'
+                            );
+                        $mailer->send($message);
+                        $result = 'get ' . $parent_author . ' and sent an email to ' . $email;
+                        $code = 1;
+                    } catch (Exception $e) {
+                        $result = $e->getMessage();
+                        $code = -3;
+                        $logger->error('email_error:'. $e->getMessage());
+                    }
                 } else {
                     $result = 'get ' . $parent_author;
                     $code = 0;
