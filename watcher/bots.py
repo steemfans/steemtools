@@ -42,6 +42,7 @@ def worker(start, end):
             operations = trans['operations']
             for op in operations:
                 if op[0] == 'comment' and op[1]['parent_author'] != '':
+                    print('send data: ', op[1])
                     postdata = json.dumps(op[1])
                     r = requests.post(api_url, data=postdata)
                     print('{start}:{end}: {result}'.format(
