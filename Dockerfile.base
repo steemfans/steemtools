@@ -9,5 +9,5 @@ RUN apk add --no-cache \
         musl-dev \
         openssl-dev
 RUN pip3 install requests && \
-        pip3 install -U git+git://github.com/Netherdrake/steem-python
+        pip3 install steem
 
