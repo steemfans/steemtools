@@ -105,7 +105,7 @@ class ApiController extends Controller
                         $transfer_url = 'https://steemit.com/@'.$to.'/transfers';
                         $sys_email = getenv('SYS_EMAIL');
                         // send email
-                        $message = (new \Swift_Message('[SteemMention] You have GOT money from '.$from.'!'))
+                        $message = (new \Swift_Message('[SteemMention] You have GOT money from '.$from.' !'))
                             ->setFrom($sys_email)
                             ->setTo($email)
                             ->setBody(
@@ -115,6 +115,8 @@ class ApiController extends Controller
                                         'transfer_url' => $transfer_url,
                                         'to' => $to,
                                         'from' => $from,
+                                        'amount' => $amount,
+                                        'memo' => $memo,
                                     ]
                                 ),
                                 'text/html'
