@@ -170,6 +170,7 @@ class UserController extends Controller
         // base setting [const]
         $base_settings = [
             'replies' => 'off',
+            'transfer' => 'off',
         ];
 
         $email = $session->get('current_email', null);
