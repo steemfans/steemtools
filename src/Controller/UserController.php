@@ -203,7 +203,7 @@ class UserController extends Controller
             if ($post_settings) {
                 foreach ($base_settings as $k => $v) {
                     if (isset($post_settings[$k])) {
-                        $settings[$k] = $v;
+                        $settings[$k] = $post_settings[$k];
                     } else {
                         $settings[$k] = 'off';
                     }
