@@ -66,7 +66,8 @@ def run():
         'https://rpc.buildteam.io',
         'https://api.steemit.com',
     ]
-    s = Steemd(nodes=steemd_nodes)
+    s = Steemd()
+    # s = Steemd(nodes=steemd_nodes)
     b = Blockchain(s)
 
     while True:
