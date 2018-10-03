@@ -201,8 +201,8 @@ class UserController extends Controller
             $post_settings = $request->request->get('settings', []);
 
             if ($post_settings) {
-                foreach ($post_settings as $k => $v) {
-                    if (isset($settings[$k])) {
+                foreach ($base_settings as $k => $v) {
+                    if (isset($post_settings[$k])) {
                         $settings[$k] = $v;
                     } else {
                         $settings[$k] = 'off';
