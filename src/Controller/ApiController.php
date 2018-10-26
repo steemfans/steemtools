@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Psr\Log\LoggerInterface;
 use App\Entity\User;
+use EasyWeChat\Factory;
 
 class ApiController extends Controller
 {
@@ -145,5 +146,115 @@ class ApiController extends Controller
 
         }
         
+    }
+
+    /**
+     * @Route("/api/wx", name="api_wx")
+     */
+    public function wx(Request $request, LoggerInterface $logger)
+    {
+        $config = [
+            'app_id' => getenv('WX_APPID'),
+            'secret' => getenv('WX_APPSECRET'),
+            'token'  => getenv('WX_TOKEN'),
+            // 指定 API 调用返回结果的类型：array(default)/collection/object/raw/自定义类名
+            'response_type' => 'array',
+            'oauth' => [
+                'scopes'   => ['snsapi_userinfo'],
+                'callback' => '/wx/oauth_callback',
+            ],
+            'log' => [
+                'default' => 'dev', // 默认使用的 channel，生产环境可以改为下面的 prod
+                'channels' => [
+                    // 测试环境
+                    'dev' => [
+                        'driver' => 'single',
+                        'path' => '/tmp/easywechat.log',
+                        'level' => 'debug',
+                    ],
+                    // 生产环境
+                    'prod' => [
+                        'driver' => 'daily',
+                        'path' => '/tmp/easywechat.log',
+                        'level' => 'info',
+                    ],
+                ],
+            ],
+        ];
+        $wxapp = Factory::officialAccount($config);
+        $server = $wxapp->server;
+        $user = $wxapp->user;
+
+        $server->push(function($message) use ($user) {
+            //$fromUser = $user->get($message['FromUserName']);
+            //return "您好, {$fromUser['nickname']}！欢迎关注 overtrue!";
+            switch ($message['MsgType']) {
+                case 'event':
+                    // return '收到事件消息';
+                    if ($message['Event'] == 'subscribe') {
+
+                    }
+                    return $this->helpMsg();
+                    break;
+                case 'text':
+                    return $this->handleText($message);
+                    break;
+                case 'image':
+                    // return '收到图片消息';
+                    return $this->helpMsg();
+                    break;
+                case 'voice':
+                    // return '收到语音消息';
+                    return $this->helpMsg();
+                    break;
+                case 'video':
+                    // return '收到视频消息';
+                    return $this->helpMsg();
+                    break;
+                case 'location':
+                    // return '收到坐标消息';
+                    return $this->helpMsg();
+                    break;
+                case 'link':
+                    // return '收到链接消息';
+                    return $this->helpMsg();
+                    break;
+                case 'file':
+                    // return '收到文件消息';
+                    return $this->helpMsg();
+                // ... 其它消息
+                default:
+                    // return '收到其它消息';
+                    return $this->helpMsg();
+                    break;
+            }
+        });
+
+        // $this->sendWX($wxapp, []);
+        $response = $server->serve();
+        // var_dump($response);
+        return $response;
+    }
+
+    private function sendWX($wxapp, $data) {
+        $wxapp->template_message->send([
+            'touser' => 'oUeGNtz41L35y49a_xqXGjWeBazU',
+            'template_id' => getenv('WX_TEMPLATEID'),
+            'url' => 'https://easywechat.org',
+            'data' => [
+                'title' => '这里是标题',
+                'sendtime' => date('Y-m-d H:i:s', time()),
+                'content' => "这里是内容\n内容\n内容\n内容\n内容\n内容\n内容\n内容\n内容\n内容\n",
+            ],
+        ]);
+        
+    }
+
+    private function helpMsg() {
+        return "回复数字进行选择：\n1. 绑定 Steem 账号\n2. 设置需要提醒的内容\n";
+    }
+
+    private function handleText($msg) {
+
     }
 }

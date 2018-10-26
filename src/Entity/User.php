@@ -22,7 +22,17 @@ class User
     private $email;
 
     /**
+     * @ORM\Column(type="string", length=32, nullable=true)
+     */
+    private $wx_openid;
+
+    /**
      * @ORM\Column(type="text", nullable=true)
+     */
+    private $wx_userinfo;
+
+    /**
+     * @ORM\Column(type="string", length=200, nullable=true)
      */
     private $username;
 
