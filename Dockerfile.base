@@ -10,4 +10,3 @@ RUN apk add --no-cache \
         openssl-dev
 RUN pip3 install requests && \
         pip3 install steem
-
