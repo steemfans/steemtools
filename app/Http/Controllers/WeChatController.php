@@ -132,20 +132,30 @@ class WeChatController extends Controller
                     $menu .= "22. 全不选\n";
                     $menu .= "23. 回复提醒 {$settings['replies']['icon']}\n";
                     $menu .= "24. 收款提醒 {$settings['transfer']['icon']}\n";
+                    $menu .= "25. 代理SP提醒 {$settings['delegate_vesting_shares']['icon']}\n";
                     return $menu.$this->ad();
                     break;
                 case '21':
-                    $user->settings = json_encode(['replies' => 1, 'transfer'=>1]);
+                    $user->settings = json_encode([
+                        'replies' => 1,
+                        'transfer'=>1,
+                        'delegate_vesting_shares'=>1,
+                    ]);
                     $user->save();
                     return '提醒已全部打开'.$this->ad();
                     break;
                 case '22':
-                    $user->settings = json_encode(['replies' => 0, 'transfer'=>0]);
+                    $user->settings = json_encode([
+                        'replies' => 0,
+                        'transfer'=> 0,
+                        'delegate_vesting_shares'=> 0,
+                    ]);
                     $user->save();
                     return '提醒已全部关闭'.$this->ad();
                     break;
                 case '23':
-                    $tmp_settings = json_decode($user->settings, true);
+                    $tmp_settings = $user->settings ?
+                        json_decode($user->settings, true) : [];
                     if ($settings['replies']['r'] == 1) {
                         $tmp_settings['replies'] = 0;
                         $user->settings = json_encode($tmp_settings);
@@ -159,7 +169,8 @@ class WeChatController extends Controller
                     }
                     break;
                 case '24':
-                    $tmp_settings = json_decode($user->settings, true);
+                    $tmp_settings = $user->settings ?
+                        json_decode($user->settings, true) : [];
                     if ($settings['transfer']['r'] == 1) {
                         $tmp_settings['transfer'] = 0;
                         $user->settings = json_encode($tmp_settings);
@@ -170,6 +181,21 @@ class WeChatController extends Controller
                         $user->settings = json_encode($tmp_settings);
                         $user->save();
                         return '收款提醒已打开'.$this->ad();
+                    }
+                    break;
+                case '25':
+                    $tmp_settings = $user->settings ?
+                        json_decode($user->settings, true) : [];
+                    if ($settings['delegate_vesting_shares']['r'] == 1) {
+                        $tmp_settings['delegate_vesting_shares'] = 0;
+                        $user->settings = json_encode($tmp_settings);
+                        $user->save();
+                        return '代理SP提醒已关闭'.$this->ad();
+                    } else {
+                        $tmp_settings['delegate_vesting_shares'] = 1;
+                        $user->settings = json_encode($tmp_settings);
+                        $user->save();
+                        return '代理SP提醒已打开'.$this->ad();
                     }
                     break;
                 default:

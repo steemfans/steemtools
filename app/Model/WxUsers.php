@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class WxUsers extends Model
 {
     protected $table = 'wx_users';
-    protected $setting_items = ['replies', 'transfer'];
+    protected $setting_items = ['replies', 'transfer', 'delegate_vesting_shares'];
 
     public function getSettingsIcon() {
+        // var_dump($this->settings);
         if ($this->settings) {
             $settings = json_decode($this->settings, true);
             $res = [];

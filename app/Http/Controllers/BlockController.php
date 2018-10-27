@@ -84,7 +84,7 @@ class BlockController extends Controller
                     try {
                         // 引入微信SDK
                         $app = app('wechat.official_account');
-                        $tmpl_id = getenv('WECHAT_TMPL_TRANSFER_ID');
+                        $tmpl_id = getenv('WECHAT_TMPL_CHANGE_ID');
 
                         $transfer_url = 'https://steemit.com/@'.$to.'/transfers';
                         // 发送微信模板消息
@@ -94,10 +94,14 @@ class BlockController extends Controller
                             'url' => $transfer_url,
                             'data' => [
                                 'first' => $to.'，你收到了新的资金',
-                                'keyword1' => $memo,
-                                'keyword2' => $amount,
-                                'keyword3' => date('Y-m-d H:i:s', time()),
-                                'remark' => '点击可以查看详情',
+                                'keyword1' => date('Y-m-d H:i:s', time()),
+                                'keyword2' => '收款',
+                                'keyword3' => $amount,
+                                'remark' => $memo
+                                            ?
+                                            "备注消息: {$memo}\n\n点击可以查看详情"
+                                            :
+                                            '点击可以查看详情',
                             ],
                         ]);
                         $result = 'transfer to' . $to. ' and sent wx msg';
@@ -113,6 +117,55 @@ class BlockController extends Controller
                 }
             } else {
                 $result = $to. ' is not in db.';
+                $code = -1;
+            }
+            return response()->json([
+                'result' => $result,
+                'code' => $code,
+            ]);
+        }
+        // 代理提醒
+        if ($data_type == 'delegate_vesting_shares') {
+            $delegator = isset($data['delegator']) ? $data['delegator'] : null;
+            $delegatee = isset($data['delegatee']) ? $data['delegatee'] : null;
+            $vesting_shares = isset($data['vesting_shares']) ? $data['vesting_shares'] : null;
+
+            $user = WxUsers::where('username', $delegatee)->first();
+            if ($user) {
+                $settings = json_decode($user->settings, true);
+                if ( isset($settings['delegate_vesting_shares']) && $settings['delegate_vesting_shares'] == 1) {
+                    try {
+                        // 引入微信SDK
+                        $app = app('wechat.official_account');
+                        $tmpl_id = getenv('WECHAT_TMPL_CHANGE_ID');
+
+                        $delegate_url = 'https://steemd.com/@'.$delegatee;
+                        // 发送微信模板消息
+                        $app->template_message->send([
+                            'touser' => $user['wx_openid'],
+                            'template_id' => $tmpl_id,
+                            'url' => $delegate_url,
+                            'data' => [
+                                'first' => $delegatee.'，你收到了新的SP代理',
+                                'keyword1' => date('Y-m-d H:i:s', time()),
+                                'keyword2' => 'SP 代理',
+                                'keyword3' => $vesting_shares,
+                                'remark' => '点击可以查看详情',
+                            ],
+                        ]);
+                        $result = $delegator . ' delegate to' . $delegatee. ' and sent wx msg';
+                        $code = 1;
+                    } catch (Exception $e) {
+                        $result = $e->getMessage();
+                        $code = -3;
+                        Log::error('send_delegate_error:'. $e->getMessage());
+                    }
+                } else {
+                    $result = $delegator . ' delegate to' . $delegatee. ' but not set delegate on';
+                    $code = 0;
+                }
+            } else {
+                $result = $delegatee. ' is not in db.';
                 $code = -1;
             }
             return response()->json([

@@ -58,6 +58,15 @@ def worker(start, end):
                         end=end,
                         result=r.text)
                         )
+                if op[0] == 'delegate_vesting_shares':
+                    print('send data: ', op[1])
+                    postdata = json.dumps(op)
+                    r = requests.post(api_url, data=postdata)
+                    print('{start}:{end}: {result}'.format(
+                        start=start,
+                        end=end,
+                        result=r.text)
+                        )
 
 def run():
     global start_block_num
