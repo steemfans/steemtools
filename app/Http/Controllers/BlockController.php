@@ -43,7 +43,7 @@ class BlockController extends Controller
                                 'template_id' => $tmpl_id,
                                 'url' => $reply_url,
                                 'data' => [
-                                    'first' => $author.' 回复了你的《'.$title.'》',
+                                    'first' => $author.' 回复了你的文章',
                                     'keyword1' => date('Y-m-d H:i:s', time()),
                                     'keyword2' => $body,
                                     'remark' => '点击可以查看详情',
