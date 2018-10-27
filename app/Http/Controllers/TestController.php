@@ -10,8 +10,8 @@ class TestController extends Controller
 {
     public function index() {
         // var_dump(getenv());
-        $user = WxUsers::where('wx_openid', '123')->first();
-        var_dump($user);
+        $user = WxUsers::where('username', 'ety001')->first();
+        var_dump($user->getSettingsIcon());
 
     }
 }
