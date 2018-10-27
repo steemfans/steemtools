@@ -11,7 +11,6 @@ class WxUsers extends Model
 
     public function getSettingsIcon() {
         if ($this->settings) {
-            var_dump($this->settings);
             $settings = json_decode($this->settings, true);
             $res = [];
             foreach($this->setting_items as $v) {
