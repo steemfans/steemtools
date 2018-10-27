@@ -173,5 +173,55 @@ class BlockController extends Controller
                 'code' => $code,
             ]);
         }
+
+        // 见证人投票提醒
+        if ($data_type == 'account_witness_vote') {
+            $account = isset($data['account']) ? $data['account'] : null;
+            $witness = isset($data['witness']) ? $data['witness'] : null;
+            $approve = isset($data['approve']) ? $data['approve'] : true;
+
+            $user = WxUsers::where('username', $witness)->first();
+            if ($user) {
+                $settings = json_decode($user->settings, true);
+                if ( isset($settings['account_witness_vote']) && $settings['account_witness_vote'] == 1) {
+                    try {
+                        // 引入微信SDK
+                        $app = app('wechat.official_account');
+                        $tmpl_id = getenv('WECHAT_TMPL_CHANGE_ID');
+
+                        $witness_url = 'https://steemd.com/@'.$witness;
+                        // 发送微信模板消息
+                        $app->template_message->send([
+                            'touser' => $user['wx_openid'],
+                            'template_id' => $tmpl_id,
+                            'url' => $witness_url,
+                            'data' => [
+                                'first' => $account. ' 给你'. ($approve ? '投': '撤') .'票了',
+                                'keyword1' => date('Y-m-d H:i:s', time()),
+                                'keyword2' => $approve ? '见证人投票' : '见证人撤票',
+                                'keyword3' => '无',
+                                'remark' => '点击可以查看详情',
+                            ],
+                        ]);
+                        $result = $account . ' vote to' . $witness. ' and sent wx msg';
+                        $code = 1;
+                    } catch (Exception $e) {
+                        $result = $e->getMessage();
+                        $code = -3;
+                        Log::error('send_delegate_error:'. $e->getMessage());
+                    }
+                } else {
+                    $result = $account . ' vote to' . $witness. ' but not set witnees on';
+                    $code = 0;
+                }
+            } else {
+                $result = $witness. ' is not in db.';
+                $code = -1;
+            }
+            return response()->json([
+                'result' => $result,
+                'code' => $code,
+            ]);
+        }
     }
 }

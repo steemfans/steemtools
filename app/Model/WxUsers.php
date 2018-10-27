@@ -7,7 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class WxUsers extends Model
 {
     protected $table = 'wx_users';
-    protected $setting_items = ['replies', 'transfer', 'delegate_vesting_shares'];
+    protected $setting_items = [
+        'replies',
+        'transfer',
+        'delegate_vesting_shares',
+        'account_witness_vote',
+    ];
 
     public function getSettingsIcon() {
         // var_dump($this->settings);

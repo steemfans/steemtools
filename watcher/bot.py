@@ -40,25 +40,10 @@ def worker(start, end):
         for trans in transactions:
             operations = trans['operations']
             for op in operations:
-                if op[0] == 'comment' and op[1]['parent_author'] != '':
-                    print('send data: ', op[1])
-                    postdata = json.dumps(op)
-                    r = requests.post(api_url, data=postdata)
-                    print('{start}:{end}: {result}'.format(
-                        start=start,
-                        end=end,
-                        result=r.text)
-                        )
-                if op[0] == 'transfer':
-                    print('send data: ', op[1])
-                    postdata = json.dumps(op)
-                    r = requests.post(api_url, data=postdata)
-                    print('{start}:{end}: {result}'.format(
-                        start=start,
-                        end=end,
-                        result=r.text)
-                        )
-                if op[0] == 'delegate_vesting_shares':
+                if (op[0] == 'comment' and op[1]['parent_author'] != '')
+                    or (op[0] == 'transfer')
+                    or (op[0] == 'delegate_vesting_shares')
+                    or (op[0] == 'account_witness_vote'):
                     print('send data: ', op[1])
                     postdata = json.dumps(op)
                     r = requests.post(api_url, data=postdata)

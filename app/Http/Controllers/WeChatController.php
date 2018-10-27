@@ -133,6 +133,7 @@ class WeChatController extends Controller
                     $menu .= "23. 回复提醒 {$settings['replies']['icon']}\n";
                     $menu .= "24. 收款提醒 {$settings['transfer']['icon']}\n";
                     $menu .= "25. 代理SP提醒 {$settings['delegate_vesting_shares']['icon']}\n";
+                    $menu .= "26. 见证人得票提醒 {$settings['account_witness_vote']['icon']}\n";
                     return $menu.$this->ad();
                     break;
                 case '21':
@@ -140,6 +141,7 @@ class WeChatController extends Controller
                         'replies' => 1,
                         'transfer'=>1,
                         'delegate_vesting_shares'=>1,
+                        'account_witness_vote'=>1,
                     ]);
                     $user->save();
                     return '提醒已全部打开'.$this->ad();
@@ -149,6 +151,7 @@ class WeChatController extends Controller
                         'replies' => 0,
                         'transfer'=> 0,
                         'delegate_vesting_shares'=> 0,
+                        'account_witness_vote'=>0,
                     ]);
                     $user->save();
                     return '提醒已全部关闭'.$this->ad();
@@ -196,6 +199,21 @@ class WeChatController extends Controller
                         $user->settings = json_encode($tmp_settings);
                         $user->save();
                         return '代理SP提醒已打开'.$this->ad();
+                    }
+                    break;
+                case '26':
+                    $tmp_settings = $user->settings ?
+                        json_decode($user->settings, true) : [];
+                    if ($settings['account_witness_vote']['r'] == 1) {
+                        $tmp_settings['account_witness_vote'] = 0;
+                        $user->settings = json_encode($tmp_settings);
+                        $user->save();
+                        return '见证人得票提醒已关闭'.$this->ad();
+                    } else {
+                        $tmp_settings['account_witness_vote'] = 1;
+                        $user->settings = json_encode($tmp_settings);
+                        $user->save();
+                        return '见证人得票提醒已打开'.$this->ad();
                     }
                     break;
                 default:
