@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Log;
 
+use App\Model\WxUsers;
+
 class WeChatController extends Controller
 {
     /**
@@ -19,16 +21,17 @@ class WeChatController extends Controller
         $app = app('wechat.official_account');
         $user = $app->user;
         $app->server->push(function($message) use ($user) {
+            $userinfo = $user->get($message['FromUserName']);
             switch ($message['MsgType']) {
                 case 'event':
                     // return '收到事件消息';
                     if ($message['Event'] == 'subscribe') {
-                        $this->subscribeEvent($message);
+                        $this->subscribeEvent($message, $userinfo);
                     }
                     return $this->helpMsg();
                     break;
                 case 'text':
-                    return $this->handleText($message);
+                    return $this->handleText($message, $userinfo);
                     break;
                 case 'image':
                     // return '收到图片消息';
@@ -68,11 +71,20 @@ class WeChatController extends Controller
         return "回复数字进行选择：\n1. 绑定 Steem 账号\n2. 设置需要提醒的内容\n";
     }
 
-    private function subscribeEvent($msg) {
 
+    private function subscribeEvent($msg, $userinfo) {
+        $openid = $msg['FromUserName'];
+        $user = WxUsers::where('wx_openid', $openid)->first();
+        if (!$user) {
+            $wxuser = new WxUsers;
+            $wxuser->wx_openid = $openid;
+            $wxuser->userinfo = json_encode($userinfo);
+            $wxuser->save();
+        }
+        return;
     }
 
-    private function handleText($msg) {
+    private function handleText($msg, $userinfo) {
         if (stristr($msg['Content'], 'bind')) {
             // 绑定用户
         } else if (stristr($msg['Content'], 'help')) {
