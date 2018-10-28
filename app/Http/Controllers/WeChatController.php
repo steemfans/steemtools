@@ -82,17 +82,17 @@ class WeChatController extends Controller
                     [
                         "type" => "view",
                         "name" => "SteemYY",
-                        "url"  => "https://steemyy.com/steemit-tools/"
+                        "url"  => "https://steem.to0l.cn/page/jump/steemyy",
                     ],
                     [
                         "type" => "view",
                         "name" => "见证人",
-                        "url"  => "https://www.eztk.net/tools/my_witnesses.php"
+                        "url"  => "https://steem.to0l.cn/page/jump/witness",
                     ],
                     [
                         "type" => "view",
                         "name" => "SteemGG",
-                        "url" => "https://steemgg.com/"
+                        "url"  => "https://steem.to0l.cn/page/jump/steemgg",
                     ],
                 ],
             ],
