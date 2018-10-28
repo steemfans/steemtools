@@ -39,7 +39,7 @@
                 <div style="text-align: center; margin-top: 20%;">
                     <div style="font-size: 16px;">正在准备跳转至</div>
                     <div style="font-size: 36px; margin-top: 20px;">{{ $sitename }}</div>
-                    <div style="margin-top: 30px;"><span id="sec">10</span> 秒</div>
+                    <div style="margin-top: 30px;"><span id="sec">5</span> 秒</div>
                     <div style="margin-top: 120px;">开发者</div>
                     <div>{{ $text }}</div>
                 </div>
