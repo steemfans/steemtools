@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>SteemTools</title>
         <link rel="apple-touch-icon" sizes="57x57" href="/fav/apple-icon-57x57.png">
         <link rel="apple-touch-icon" sizes="60x60" href="/fav/apple-icon-60x60.png">
@@ -39,7 +39,7 @@
                 <div style="text-align: center; margin-top: 20%;">
                     <div style="font-size: 16px;">正在准备跳转至</div>
                     <div style="font-size: 36px; margin-top: 20px;">{{ $sitename }}</div>
-                    <div style="margin-top: 30px;"><span id="sec">5</span> 秒</div>
+                    <div style="margin-top: 30px;"><span id="sec">3</span> 秒</div>
                     <div style="margin-top: 120px;">开发者</div>
                     <div>{{ $text }}</div>
                 </div>

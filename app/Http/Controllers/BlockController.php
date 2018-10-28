@@ -93,7 +93,7 @@ class BlockController extends Controller
                             'template_id' => $tmpl_id,
                             'url' => $transfer_url,
                             'data' => [
-                                'first' => $to.'，你收到了新的资金',
+                                'first' => "{$to}，你收到了 {$from} 发给你的 {$amount}",
                                 'keyword1' => date('Y-m-d H:i:s', time()),
                                 'keyword2' => '收款',
                                 'keyword3' => $amount,

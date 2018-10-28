@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>SteemTools</title>
         <link rel="apple-touch-icon" sizes="57x57" href="/fav/apple-icon-57x57.png">
         <link rel="apple-touch-icon" sizes="60x60" href="/fav/apple-icon-60x60.png">
