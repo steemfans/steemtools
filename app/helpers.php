@@ -34,7 +34,7 @@ if (! function_exists('vests_to_sp')) {
         }
         if ($steem_per_mvests) {
             $vests = str_replace(',', '', $vests);
-            return (float)$vests / 1e6 * (float)$steem_per_mvests;
+            return (float)$vests / 1e3 * (float)$steem_per_mvests;
         } else {
             return false;
         }
