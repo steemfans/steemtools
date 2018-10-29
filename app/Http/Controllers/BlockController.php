@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Log;
 
 use App\Model\WxUsers;
+use App\Model\Settings;
 
 class BlockController extends Controller
 {
@@ -140,16 +141,22 @@ class BlockController extends Controller
                         $tmpl_id = getenv('WECHAT_TMPL_CHANGE_ID');
 
                         $delegate_url = 'https://steemd.com/@'.$delegatee;
+                        $steem_per_mvest = Settings::steem_per_mvests();
+                        if ($steem_per_mvest) {
+                            $sp = number_format(vests_to_sp($vesting_shares, $steem_per_mvest), 3).' SP';
+                        } else {
+                            $sp = false;
+                        }
                         // 发送微信模板消息
                         $app->template_message->send([
                             'touser' => $user['wx_openid'],
                             'template_id' => $tmpl_id,
                             'url' => $delegate_url,
                             'data' => [
-                                'first' => $delegatee.'，你收到了新的SP代理',
+                                'first' => "{$delegatee}，你收到了 {$delegator} 的SP代理",
                                 'keyword1' => date('Y-m-d H:i:s', time()),
                                 'keyword2' => 'SP 代理',
-                                'keyword3' => $vesting_shares,
+                                'keyword3' => $sp ? $sp : $vesting_shares,
                                 'remark' => '点击可以查看详情',
                             ],
                         ]);
