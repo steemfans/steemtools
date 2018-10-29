@@ -33,7 +33,8 @@ if (! function_exists('vests_to_sp')) {
             $steem_per_mvests = steem_per_mvests();
         }
         if ($steem_per_mvests) {
-            return $vests / 1e6 * $steem_per_mvests;
+            $vests = str_replace(',', '', $vests);
+            return (float)$vests / 1e6 * (float)$steem_per_mvests;
         } else {
             return false;
         }

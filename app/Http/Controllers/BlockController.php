@@ -143,7 +143,8 @@ class BlockController extends Controller
                         $delegate_url = 'https://steemd.com/@'.$delegatee;
                         $steem_per_mvest = Settings::steem_per_mvests();
                         if ($steem_per_mvest) {
-                            $sp = number_format(vests_to_sp($vesting_shares, $steem_per_mvest), 3).' SP';
+                            $tmp_vests = explode(' ', $vesting_shares);
+                            $sp = number_format(vests_to_sp($tmp_vests[0], $steem_per_mvest), 3).' SP';
                         } else {
                             $sp = false;
                         }
