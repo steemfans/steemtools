@@ -40,4 +40,22 @@ class PageController extends Controller
         );
     }
 
+    public function sellvote() {
+        $data = [];
+        return response()->view(
+            'page/sellvote',
+            $data,
+            200
+        );
+    }
+
+    public function tools() {
+        $data = [];
+        return response()->view(
+            'page/tools',
+            $data,
+            200
+        );
+    }
+
 }
