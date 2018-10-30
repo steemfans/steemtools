@@ -14,7 +14,7 @@ class PageController extends Controller
                 $sitename = 'SteemYY';
                 break;
             case 'witness':
-                $url = 'https://www.eztk.net/tools/my_witnesses.php';
+                $url = 'https://www.eztk.net/witnesses.php';
                 $text = '@oflyhigh';
                 $sitename = '见证人列表';
                 break;
