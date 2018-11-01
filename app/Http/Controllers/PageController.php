@@ -10,7 +10,7 @@ class PageController extends Controller
     public function jump($website) {
         $userinfo = session('wechat.oauth_user.default');
         $userid = $userinfo->id;
-        $user = WxUsers::where('wx_openid')->first();
+        $user = WxUsers::where('wx_openid', $userid)->first();
         if ($user) {
             $steem_username = $user->username;
         } else {
