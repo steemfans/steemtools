@@ -72,7 +72,7 @@ def run():
         with futures.ThreadPoolExecutor(max_workers=worker_num) as executor:
             executor.submit(worker, start_block_num, end_block_num)
         start_block_num = end_block_num + 1
-        time.sleep(3)
+        #time.sleep(3)
 
 if __name__ == '__main__':
     with suppress(KeyboardInterrupt):
