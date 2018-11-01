@@ -3,10 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\WxUsers;
 
 class PageController extends Controller
 {
     public function jump($website) {
+        $userinfo = session('wechat.oauth_user.default');
+        $userid = $userinfo->id;
+        $user = WxUsers::where('wx_openid')->first();
+        if ($user) {
+            $steem_username = $user->username;
+        } else {
+            $steem_username = '';
+        }
         switch($website) {
             case 'steemyy':
                 $url = 'https://steemyy.com/steemit-tools/';
@@ -14,7 +23,7 @@ class PageController extends Controller
                 $sitename = 'SteemYY';
                 break;
             case 'witness':
-                $url = 'https://www.eztk.net/witnesses.php';
+                $url = 'https://www.eztk.net/witnesses.php?id='.$steem_username;
                 $text = '@oflyhigh';
                 $sitename = '见证人列表';
                 break;

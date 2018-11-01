@@ -100,6 +100,38 @@ class WeChatController extends Controller
         return $app->menu->create($buttons);
     }
 
+    public function testmenu() {
+        $app = app('wechat.official_account');
+        $buttons = [
+            [
+                "type" => "click",
+                "name" => "配置",
+                "key"  => "help"
+            ],
+            [
+                "name"       => "小工具",
+                "sub_button" => [
+                    [
+                        "type" => "view",
+                        "name" => "SteemYY",
+                        "url"  => "https://test.to0l.cn/page/jump/steemyy",
+                    ],
+                    [
+                        "type" => "view",
+                        "name" => "见证人",
+                        "url"  => "https://test.to0l.cn/page/jump/witness",
+                    ],
+                    [
+                        "type" => "view",
+                        "name" => "SteemGG",
+                        "url"  => "https://test.to0l.cn/page/jump/steemgg",
+                    ],
+                ],
+            ],
+        ];
+        return $app->menu->create($buttons);
+    }
+
     private function helpMsg() {
         return "回复数字进行选择：\n1. 绑定 Steem 账号\n2. 设置需要提醒的内容\n".$this->ad();
     }
