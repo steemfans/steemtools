@@ -24,7 +24,9 @@ Route::group(['middleware' => ['web', 'wechat.oauth:default,snsapi_userinfo']], 
     Route::any('/page/jump/{website}', 'PageController@jump');
     Route::any('/page/sellvote', 'PageController@sellvote');
     Route::any('/page/tools', 'PageController@tools');
-});
 
+    Route::any('/account/selector', 'AccountController@selector');
+    Route::any('/steem/callback', 'SteemController@callback');
+});
 
 Route::any('/test', 'TestController@index');
