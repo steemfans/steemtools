@@ -46,6 +46,25 @@ class AccountController extends Controller
         $wx_userinfo = session('wechat.oauth_user.default');
         $wx_openid = $wx_userinfo->id;
 
+        $wxuser = WxUsers::where('wx_openid', $wx_openid)
+                    ->where('username', $username)
+                    ->first();
+
+        if ($wxuser) {
+            $wxuser->delete();
+            return response()->view(
+                'account/unbind',
+                [
+                    'wx_userinfo' => $wx_userinfo,
+                    'username' => $wxuser->username,
+                    'unbind_url' => 'https://steemconnect.com/revoke/@steemtools.app',
+                ],
+                200
+            );
+        } else {
+            return redirect('/account/selector')
+                    ->with('status0', '用户不存在');
+        }
     }
 
     public function config($username) {
