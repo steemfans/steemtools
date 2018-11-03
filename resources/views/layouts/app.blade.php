@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
         <title>SteemTools - @yield('title')</title>
         <link rel="apple-touch-icon" sizes="57x57" href="/fav/apple-icon-57x57.png">
         <link rel="apple-touch-icon" sizes="60x60" href="/fav/apple-icon-60x60.png">
@@ -34,7 +34,9 @@
         </script>
     </head>
     <body>
-        @yield('body')
+        <div class="row" style="width: 100%; margin:0;">
+            @yield('body')
+        <div>
         <script src="/js/jquery-3.3.1.min.js"></script>
         <script src="bootstrap/js/bootstrap.min.js"></script>
         @yield('customjs')

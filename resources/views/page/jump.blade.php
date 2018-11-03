@@ -3,7 +3,6 @@
 @section('title', 'Landing')
 
 @section('body')
-<div class="row">
     <div class="col-xs-12 col-sm-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
         @if ($url)
         <div style="text-align: center; margin-top: 20%;">
@@ -21,7 +20,6 @@
         @endif
         <div></div>
     </div>
-</div>
 @endsection
 
 @section('customjs')

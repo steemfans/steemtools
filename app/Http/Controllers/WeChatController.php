@@ -72,9 +72,14 @@ class WeChatController extends Controller
         $app = app('wechat.official_account');
         $buttons = [
             [
-                "type" => "click",
-                "name" => "配置",
-                "key"  => "help"
+                "name"       => "我的",
+                "sub_button" => [
+                    [
+                        "type" => "view",
+                        "name" => "开始",
+                        "url"  => "https://steem.to0l.cn/account/selector",
+                    ],
+                ],
             ],
             [
                 "name"       => "小工具",
@@ -104,9 +109,14 @@ class WeChatController extends Controller
         $app = app('wechat.official_account');
         $buttons = [
             [
-                "type" => "click",
-                "name" => "配置",
-                "key"  => "help"
+                "name"       => "我的",
+                "sub_button" => [
+                    [
+                        "type" => "view",
+                        "name" => "开始",
+                        "url"  => "https://test.to0l.cn/account/selector",
+                    ],
+                ],
             ],
             [
                 "name"       => "小工具",
@@ -133,13 +143,14 @@ class WeChatController extends Controller
     }
 
     private function helpMsg() {
-        return "回复数字进行选择：\n1. 绑定 Steem 账号\n2. 设置需要提醒的内容\n".$this->ad();
+        // return "回复数字进行选择：\n1. 绑定 Steem 账号\n2. 设置需要提醒的内容\n".$this->ad();
+        return "欢迎关注 SteemTools!\n要开始使用 SteemTools 请点击菜单栏的配置进行配置";
     }
 
 
     private function subscribeEvent($msg, $userinfo) {
         $openid = $msg['FromUserName'];
-        $this->checkAndInsertUser($openid, $userinfo);
+        // $this->checkAndInsertUser($openid, $userinfo);
         return;
     }
 
@@ -160,23 +171,7 @@ class WeChatController extends Controller
         $openid = $msg['FromUserName'];
         $user = $this->checkAndInsertUser($openid, $userinfo);
         $settings = $user->getSettingsIcon();
-        if (stristr($msg['Content'], 'bind')) {
-            // 绑定用户
-            $tmp = explode('bind', trim($msg['Content']));
-            if ($tmp[1]) {
-                $username = htmlspecialchars(strip_tags(substr($tmp[1], 0, 50)));
-                if ($username) {
-                    $tmp_user = WxUsers::where('wx_openid', $openid)->first();
-                    $tmp_user->username = $username;
-                    $tmp_user->save();
-                    return "绑定 {$username} 成功，你可以继续去设置需要提醒那些类型的消息。".$this->ad();
-                } else {
-                    return '请输入正确的Steem用户名';
-                }
-            } else {
-                return '请输入你的Steem用户名';
-            }
-        } else if (stristr($msg['Content'], 'help')) {
+        if (stristr($msg['Content'], 'help')) {
             // 显示帮助信息
             return $this->helpMsg();
         } else {
