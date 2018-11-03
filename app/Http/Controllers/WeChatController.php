@@ -144,7 +144,7 @@ class WeChatController extends Controller
 
     private function helpMsg() {
         // return "回复数字进行选择：\n1. 绑定 Steem 账号\n2. 设置需要提醒的内容\n".$this->ad();
-        return "欢迎关注 SteemTools!\n要开始使用 SteemTools 请点击菜单栏的配置进行配置";
+        return "欢迎关注 SteemTools!\n要开始使用 SteemTools 请点击菜单栏的“我的”=>“开始”进行配置";
     }
 
 
