@@ -5,7 +5,7 @@
 @section('customcss')
 <style>
     .btn-custom {
-        margin-left: 10px;
+        margin-left: 20px;
     }
     .alert {
         margin-top: 10px;
