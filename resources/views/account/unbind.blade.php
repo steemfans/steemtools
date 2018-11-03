@@ -9,7 +9,7 @@
 
 @section('body')
     <div class="col-xs-12 col-sm-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-        <div style="text-align: center; margin-top: 20%;">
+        <div style="text-align: center; margin-top: 15%;">
             <div><img style="width: 20%;" src="{{ $wx_userinfo['avatar'] }}"></div>
             <h4>你好, {{ $wx_userinfo['name'] }}</h4>
             <div style="margin: 20px 0;">

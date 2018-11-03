@@ -25,7 +25,7 @@
                 {{ session('status0') }}
             </div>
         @endif
-        <div style="text-align: center; margin-top: 20%;">
+        <div style="text-align: center; margin-top: 15%;">
             <div><img style="width: 20%;" src="{{ $wx_userinfo['avatar'] }}"></div>
             <h4>你好, {{ $wx_userinfo['name'] }}</h4>
             @if ($wxusers->count()==0)
