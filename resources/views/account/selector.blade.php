@@ -5,7 +5,7 @@
 @section('customcss')
 <style>
     .btn-custom {
-        margin-right: 10px;
+        margin-left: 10px;
     }
     .alert {
         margin-top: 10px;
@@ -42,10 +42,10 @@
                         @foreach ($wxusers as $u)
                         <li class="list-group-item">
                             <div class="row">
-                                <div class="col-xs-6">
+                                <div class="col-xs-12">
                                     <span>{{ $u['username'] }}</span>
                                 </div>
-                                <div class="col-xs-6">
+                                <div class="col-xs-12">
                                     <a href="{{ route('account_unbind', ['username' => $u['username']]) }}" class="pull-right btn-custom">解除绑定</a>
                                     <a href="{{ route('account_config', ['username' => $u['username']]) }}" class="pull-right btn-custom">配置</a>
                                 </div>
