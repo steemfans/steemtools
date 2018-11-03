@@ -3,7 +3,6 @@
 @section('title', '卖赞商家列表')
 
 @section('body')
-<div class="row">
     <div class="col-xs-12 col-sm-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
         <div style="text-align: center;"><h3>卖赞商家列表</h3></div>
         <div class="list-group" style="margin:0 20px;">
@@ -42,7 +41,6 @@
             </ul>
         </nav>
     </div>
-</div>
 @endsection
 
 @section('customjs')

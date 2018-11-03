@@ -7,6 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 class WxUsers extends Model
 {
     protected $table = 'wx_users';
+    /**
+     * 可以被批量赋值的属性。
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'username',
+        'wx_openid',
+        'email',
+        'sc_code',
+        'sc_access_token',
+        'sc_refresh_token',
+        'sc_expires_in',
+        'user_info',
+        'settings',
+    ];
+
     protected $setting_items = [
         'replies',
         'transfer',
@@ -34,5 +51,18 @@ class WxUsers extends Model
             }
             return $res;
         }
+    }
+
+    public function saveSettings($settings) {
+        $res = [];
+        foreach($this->setting_items as $v) {
+            if (isset($settings[$v])) {
+                $res[$v] = 1;
+            } else {
+                $res[$v] = 0;
+            }
+        }
+        $this->settings = json_encode($res);
+        return $this->save();
     }
 }
