@@ -37,7 +37,7 @@
                 <div style="margin: 20px 0;">
                     <p>以下是你已绑定的Steem账号</p>
                 </div>
-                <div style="width: 80%; margin: 0 auto; text-align: left;">
+                <div style="width: 90%; margin: 0 auto; text-align: left;">
                     <ul class="list-group">
                         @foreach ($wxusers as $u)
                         <li class="list-group-item">
