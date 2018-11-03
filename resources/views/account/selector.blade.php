@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="col-xs-6">
                                     <a href="{{ route('account_unbind', ['username' => $u['username']]) }}" class="pull-right btn-custom">解除绑定</a>
-                                    <a href="" class="pull-right btn-custom">配置</a>
+                                    <a href="{{ route('account_config', ['username' => $u['username']]) }}" class="pull-right btn-custom">配置</a>
                                 </div>
                             </div>
                         </li>

@@ -67,9 +67,39 @@ class AccountController extends Controller
         }
     }
 
-    public function config($username) {
+    public function config(Request $request, $username) {
         $wx_userinfo = session('wechat.oauth_user.default');
         $wx_openid = $wx_userinfo->id;
+
+        $wxuser = WxUsers::where('wx_openid', $wx_openid)
+                    ->where('username', $username)
+                    ->first();
+
+        if ($wxuser) {
+            // save config
+            if ($request->isMethod('post')) {
+                $settings = $request->input('settings');
+                if ($settings) {
+                    $wxuser->saveSettings($settings);
+                }
+                return redirect()->route('account_config', ['username' => $username])
+                        ->with('status1', '配置已保存');
+            }
+            // view config
+            $settings = json_decode($wxuser->settings, true);
+            return response()->view(
+                'account/config',
+                [
+                    'settings' => $settings,
+                    'wx_userinfo' => $wx_userinfo,
+                    'username' => $wxuser->username,
+                ],
+                200
+            );
+        } else {
+            return redirect('/account/selector')
+                    ->with('status0', '用户不存在');
+        }
 
     }
 }

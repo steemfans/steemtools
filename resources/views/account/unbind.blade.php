@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', '账号列表')
+@section('title', '解绑')
 
 @section('customcss')
 <style>
