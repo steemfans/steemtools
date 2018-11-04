@@ -32,6 +32,11 @@ class PageController extends Controller
                 $text = '@bobdos @bizheng @bonjovis @kanny10 @stabilowl';
                 $sitename = 'SteemGG';
                 break;
+            case 'steemh':
+                $url = 'https://steemh.org';
+                $text = 'Steem 中文社区集体创作, 主编: @dapeng, 副主编: @maiyude';
+                $sitename = 'Steem 指南';
+                break;
             default:
                 $url = '';
                 $text = '暂时没有你要找的网站';

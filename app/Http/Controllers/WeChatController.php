@@ -86,6 +86,11 @@ class WeChatController extends Controller
                 "sub_button" => [
                     [
                         "type" => "view",
+                        "name" => "Steem 指南",
+                        "url"  => "https://steem.to0l.cn/page/jump/steemh",
+                    ],
+                    [
+                        "type" => "view",
                         "name" => "SteemYY",
                         "url"  => "https://steem.to0l.cn/page/jump/steemyy",
                     ],
@@ -121,6 +126,11 @@ class WeChatController extends Controller
             [
                 "name"       => "小工具",
                 "sub_button" => [
+                    [
+                        "type" => "view",
+                        "name" => "Steem 指南",
+                        "url"  => "https://steem.to0l.cn/page/jump/steemh",
+                    ],
                     [
                         "type" => "view",
                         "name" => "SteemYY",
