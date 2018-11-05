@@ -15,16 +15,6 @@
 
 @section('body')
     <div class="col-xs-12 col-sm-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-        @if (session('status1'))
-            <div class="alert alert-success">
-                {{ session('status1') }}
-            </div>
-        @endif
-        @if (session('status0'))
-            <div class="alert alert-danger">
-                {{ session('status0') }}
-            </div>
-        @endif
         <div style="text-align: center; margin-top: 15%;">
             <div><img style="width: 20%;" src="{{ $wx_userinfo['avatar'] }}"></div>
             <h4>你好, {{ $wx_userinfo['name'] }}</h4>

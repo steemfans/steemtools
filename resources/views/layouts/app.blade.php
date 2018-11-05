@@ -35,8 +35,20 @@
     </head>
     <body>
         <div class="row" style="width: 100%; margin:0;">
+            <div class="col-xs-12 col-sm-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4" style="margin-top: 10px;">
+                @if (session('status1'))
+                    <div class="alert alert-success">
+                        {{ session('status1') }}
+                    </div>
+                @endif
+                @if (session('status0'))
+                    <div class="alert alert-danger">
+                        {{ session('status0') }}
+                    </div>
+                @endif
+            </div>
             @yield('body')
-        <div>
+        </div>
         <script src="/js/jquery-3.3.1.min.js"></script>
         <script src="bootstrap/js/bootstrap.min.js"></script>
         @yield('customjs')

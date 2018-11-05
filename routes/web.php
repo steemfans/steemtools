@@ -22,6 +22,8 @@ Route::any('/block', 'BlockController@info')->name('block_api');
 
 Route::group(['middleware' => ['web', 'wechat.oauth:default,snsapi_userinfo']], function () {
     Route::any('/page/jump/{website}', 'PageController@jump')->name('page_jump');
+    Route::any('/page/more', 'PageController@more')->name('page_more');
+    Route::any('/page/apply', 'PageController@apply')->name('page_apply');
     Route::any('/page/sellvote', 'PageController@sellvote')->name('page_sellvote');
     Route::any('/page/tools', 'PageController@tools')->name('page_tools');
 

@@ -82,7 +82,7 @@ class WeChatController extends Controller
                 ],
             ],
             [
-                "name"       => "小工具",
+                "name"       => "应用&工具",
                 "sub_button" => [
                     [
                         "type" => "view",
@@ -104,6 +104,11 @@ class WeChatController extends Controller
                         "name" => "SteemGG",
                         "url"  => "https://steem.to0l.cn/page/jump/steemgg",
                     ],
+                    [
+                        "type" => "view",
+                        "name" => "更多",
+                        "url"  => "https://steem.to0l.cn/page/more",
+                    ],
                 ],
             ],
         ];
@@ -124,7 +129,7 @@ class WeChatController extends Controller
                 ],
             ],
             [
-                "name"       => "小工具",
+                "name"       => "应用&工具",
                 "sub_button" => [
                     [
                         "type" => "view",
@@ -145,6 +150,11 @@ class WeChatController extends Controller
                         "type" => "view",
                         "name" => "SteemGG",
                         "url"  => "https://test.to0l.cn/page/jump/steemgg",
+                    ],
+                    [
+                        "type" => "view",
+                        "name" => "更多",
+                        "url"  => "https://test.to0l.cn/page/more",
                     ],
                 ],
             ],

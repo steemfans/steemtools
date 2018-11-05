@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\WxUsers;
+use App\Model\PagesJump;
 
 class PageController extends Controller
 {
@@ -16,31 +17,17 @@ class PageController extends Controller
         } else {
             $steem_username = '';
         }
-        switch($website) {
-            case 'steemyy':
-                $url = 'https://steemyy.com/steemit-tools/';
-                $text = '@justyy';
-                $sitename = 'SteemYY';
-                break;
-            case 'witness':
-                $url = 'https://www.eztk.net/witnesses.php?id='.$steem_username;
-                $text = '@oflyhigh';
-                $sitename = '见证人列表';
-                break;
-            case 'steemgg':
-                $url = 'https://steemgg.com/';
-                $text = '@bobdos @bizheng @bonjovis @kanny10 @stabilowl';
-                $sitename = 'SteemGG';
-                break;
-            case 'steemh':
-                $url = 'https://steemh.org';
-                $text = 'Steem 中文社区集体创作, 主编: @dapeng, 副主编: @maiyude';
-                $sitename = 'Steem 指南';
-                break;
-            default:
-                $url = '';
-                $text = '暂时没有你要找的网站';
-                $sitename = '';
+        $page = PagesJump::where('keyword', $website)
+                ->where('status', 1)
+                ->first();
+        if ($page) {
+            $url = $page->url . '?id=' . $steem_username;
+            $text = $page->descp;
+            $sitename = $page->sitename;
+        } else {
+            $url = '';
+            $text = '暂时没有你要找的网站';
+            $sitename = '';
         }
         return response()->view(
             'page/jump',
@@ -50,6 +37,56 @@ class PageController extends Controller
                 'text' => $text,
                 'sitename' => $sitename,
             ],
+            200
+        );
+    }
+
+    public function more() {
+        $data = [];
+        $data['pages'] = PagesJump::where('status', 1)
+                ->orderBy('order_index', 'asc')
+                ->get();
+        return response()->view(
+            'page/more',
+            $data,
+            200
+        );
+    }
+
+    public function apply(Request $request) {
+        $data = [
+            'input' => [
+                'sitename' => null,
+                'keyword' => null,
+                'url' => null,
+                'descp' => null,
+            ],
+        ];
+        if ($request->isMethod('post')) {
+            $data['input'] = $request->input();
+            $page = PagesJump::where('keyword', $data['input']['keyword'])->first();
+            if ($page) {
+                $request->session()->flash('status0', '关键词已被占用');
+                return response()->view(
+                    'page/apply',
+                    $data,
+                    200
+                );
+            }
+            $tmp = PagesJump::orderBy('order_index', 'desc')->first();
+            if ($tmp) {
+                $data['input']['order_index'] = $tmp->order_index + 1;
+            } else {
+                $data['input']['order_index'] = 0;
+            }
+            $data['input']['status'] = 0;
+            $page = PagesJump::create($data['input']);
+            return redirect()->route('page_more')
+                    ->with('status1', '申请成功, 等待审核中');
+        }
+        return response()->view(
+            'page/apply',
+            $data,
             200
         );
     }
