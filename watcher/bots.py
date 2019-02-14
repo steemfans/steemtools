@@ -8,6 +8,10 @@ from steem.steemd import Steemd
 
 
 env_dist = os.environ
+steemd_url = env_dist.get('STEEMD')
+if steemd_url == None:
+    steemd_url = 'https://api.steemit.com'
+print(steemd_url)
 api_url = env_dist.get('API_URL')
 if api_url == None:
     print("Please set API_URL env")
@@ -25,7 +29,7 @@ else:
     start_block_num = int(env_block_num)
 
 steemd_nodes = [
-    'https://api.steemit.com',
+    steemd_url,
 ]
 s = Steemd(nodes=steemd_nodes)
 b = Blockchain(s)
@@ -56,10 +60,9 @@ def worker(start, end):
 def run():
     global start_block_num
     steemd_nodes = [
-        'https://api.steemit.com',
+        steemd_url,
     ]
-    s = Steemd()
-    # s = Steemd(nodes=steemd_nodes)
+    s = Steemd(nodes=steemd_nodes)
     b = Blockchain(s)
 
     while True:
