@@ -3,13 +3,10 @@
 @section('title', isset($title) ? $title : '未找到')
 
 @section('customcss')
-<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/markdown/sspai.css">
 <style>
     body {
         background-color: #fefefe !important;
-    }
-    .post {
-        font-family: 'STXihei, Hiragino Sans GB, Droid Sans';
     }
     .post-content img {
         width: 100% !important;
