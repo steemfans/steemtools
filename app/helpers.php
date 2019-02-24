@@ -1,7 +1,9 @@
 <?php
-if (! function_exists('steem_per_mvests')) {
+use Illuminate\Support\Facades\Cache;
+
+if (!function_exists('steem_per_mvests')) {
     function steem_per_mvests() {
-        $url = 'https://api.steemit.com';
+        $api_url = getenv('STEEM_API') ? getenv('STEEM_API') : 'https://steemd.privex.io';
 
         $data = '{"jsonrpc":"2.0", "method":"database_api.get_dynamic_global_properties", "id":1}';
         $options = array(
@@ -16,7 +18,7 @@ if (! function_exists('steem_per_mvests')) {
         );
         $context  = stream_context_create($options);
         try {
-            $result = file_get_contents($url, false, $context);
+            $result = file_get_contents($api_url, false, $context);
             $r = json_decode($result, true);
             $result = $r['result'];
         } catch (\Exception $e) {
@@ -27,7 +29,7 @@ if (! function_exists('steem_per_mvests')) {
     }
 }
 
-if (! function_exists('vests_to_sp')) {
+if (!function_exists('vests_to_sp')) {
     function vests_to_sp($vests, $steem_per_mvests = false) {
         if (!$steem_per_mvests) {
             $steem_per_mvests = steem_per_mvests();
@@ -38,5 +40,63 @@ if (! function_exists('vests_to_sp')) {
         } else {
             return false;
         }
+    }
+}
+
+if (!function_exists('post_data_steem_api')) {
+    function post_data_steem_api($data = '', $api_url = 'https://steemd.privex.io') {
+        $api_url = getenv('STEEM_API') ? getenv('STEEM_API') : $api_url;
+        $options = array(
+        'http' =>
+            array(
+            'header' => "Content-Type: application/json\r\n".
+                        "Content-Length: ".strlen($data)."\r\n".
+                        "User-Agent:SteemMention/1.0\r\n",
+            'method'  => 'POST',
+            'content' => $data,
+            )
+        );
+        $context  = stream_context_create($options);
+        try {
+            $result = file_get_contents($api_url, false, $context);
+            $r = json_decode($result, true);
+        } catch (\Exception $e) {
+            \Log::error('post_data_steem_api_error:');
+            \Log::error($e);
+            return false;
+        }
+        return $r;
+    }
+}
+
+if (!function_exists('get_content_by_account_and_title')) {
+    function get_content_by_account_and_title($account, $title) {
+        $key = 'post_' . $account . '_' . $title;
+        return Cache::get($key, function() use($account, $title, $key) {
+            $data = '{"jsonrpc":"2.0", "method":"condenser_api.get_content", "params":["'.$account.'", "'.$title.'"], "id":1}';
+            $post = post_data_steem_api($data);
+            if ($post != false) {
+                // 10 minutes
+                Cache::put($key, $post, 10);
+                return $post;
+            }
+            return false;
+        });
+    }
+}
+
+if (!function_exists('get_replies_by_account_and_title')) {
+    function get_replies_by_account_and_title($account, $title) {
+        $key = 'replies_' . $account . '_' . $title;
+        return Cache::get($key, function() use($account, $title, $key) {
+            $data = '{"jsonrpc":"2.0", "method":"condenser_api.get_content_replies", "params":["'.$account.'", "'.$title.'"], "id":1}';
+            $post = post_data_steem_api($data);
+            if ($post != false) {
+                // 10 minutes
+                Cache::put($key, $post, 10);
+                return $post;
+            }
+            return false;
+        });
     }
 }

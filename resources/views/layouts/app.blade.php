@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-        <title>SteemTools - @yield('title')</title>
+        <title>@yield('title')</title>
         <link rel="apple-touch-icon" sizes="57x57" href="/fav/apple-icon-57x57.png">
         <link rel="apple-touch-icon" sizes="60x60" href="/fav/apple-icon-60x60.png">
         <link rel="apple-touch-icon" sizes="72x72" href="/fav/apple-icon-72x72.png">
@@ -34,7 +34,7 @@
         </script>
     </head>
     <body>
-        <div class="row" style="width: 100%; margin:0;">
+        <div class="row" style="width: 100%; margin:0; overflow-x: hidden;">
             <div class="col-xs-12 col-sm-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4" style="margin-top: 10px;">
                 @if (session('status1'))
                     <div class="alert alert-success">
@@ -50,7 +50,7 @@
             @yield('body')
         </div>
         <script src="/js/jquery-3.3.1.min.js"></script>
-        <script src="bootstrap/js/bootstrap.min.js"></script>
+        <script src="/bootstrap/js/bootstrap.min.js"></script>
         @yield('customjs')
     </body>
 </html>

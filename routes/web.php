@@ -32,6 +32,8 @@ Route::group(['middleware' => ['web', 'wechat.oauth:default,snsapi_userinfo']], 
     Route::any('/account/config/{username}', 'AccountController@config')->name('account_config');
 
     Route::any('/steem/callback', 'SteemController@callback')->name('steem_callback');
+
+    Route::get('/steempage/post/{author}/{title}', 'SteemPageController@post')->name('steem_page_post');
 });
 
 Route::any('/test', 'TestController@index');
