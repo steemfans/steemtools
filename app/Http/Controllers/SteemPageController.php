@@ -13,8 +13,7 @@ class SteemPageController extends Controller
         if ($post) {
             $parsedown = new \Parsedown();
             $post['result']['body'] = $parsedown->text($post['result']['body']);
-            // 默认东八区
-            $post['result']['created'] = date('Y-m-d H:i:s', strtotime($post['result']['created']) + 8*3600);
+            $post['result']['created'] = strtotime($post['result']['created']) * 1000;
             $data = $post['result'];
         } else {
             $data = [];

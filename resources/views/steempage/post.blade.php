@@ -3,6 +3,7 @@
 @section('title', isset($title) ? $title : '未找到')
 
 @section('customcss')
+<link rel="stylesheet" href="/css/github-markdown.css">
 <style>
     body {
         background-color: #fefefe !important;
@@ -27,10 +28,11 @@
         padding-left: 18px;
         color: rgba(0,0,0,0.4);
     }
-    .post-content {
-        font-size: 18px;
-        margin-bottom: 14px;
-    }
+    .markdown-body {
+        box-sizing: border-box;
+        width: 100%;
+        margin: 0 auto 14px;
+	}
     .post-reply-box {
         margin-bottom: 14px;
     }
@@ -43,9 +45,9 @@
         <div class="post-title">{{ $title }}</div>
         <div class="post-sub-title">
             <span class="author">{{ $author }}</span>
-            <span class="time">{{ $created }}</span>
+            <span class="time"></span>
         </div>
-        <div class="post-content">{!! $body !!}</div>
+        <div class="markdown-body">{!! $body !!}</div>
         <div class="post-reply-box">
         </div>
     </div>
@@ -59,6 +61,14 @@
 @section('customjs')
 <script>
 $(function(){
+    const date = new Date(Number('{{ $created }}'));
+    const Y = date.getFullYear() + '-';
+    const M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+    const D = (date.getDate() < 10 ? '0'+(date.getDate()) : date.getDate()) + ' ';
+    const h = (date.getHours() < 10 ? '0'+(date.getHours()) : date.getHours()) + ':';
+    const m = (date.getMinutes() < 10 ? '0'+(date.getMinutes()) : date.getMinutes()) + ':';
+    const s = date.getSeconds() < 10 ? '0'+(date.getSeconds()) : date.getSeconds();
+    $('.time').html(Y+M+D+h+m+s);
 })
 </script>
 @endsection
