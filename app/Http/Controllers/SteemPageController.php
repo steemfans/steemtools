@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\WxUsers;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 
 class SteemPageController extends Controller
 {
@@ -24,7 +25,7 @@ class SteemPageController extends Controller
             $img_url = get_thumb_from_content($data['body']);
             $data['share_info'] = [
                 'title' => $data['title'],
-                'desc' => '点击使用 SteemTools 查看',
+                'desc' => Str::limit($data['body'], 40),
                 'link' => route('steem_page_post', ['author' => $data['author'], 'title' => $data['permlink']]),
                 'img_url' => $img_url,
             ];
@@ -55,7 +56,7 @@ class SteemPageController extends Controller
             $img_url = get_thumb_from_content($data['body']);
             $data['share_info'] = [
                 'title' => '回复详情',
-                'desc' => '点击使用 SteemTools 查看',
+                'desc' => Str::limit($data['body'], 40),
                 'link' => route('steem_page_reply', ['author' => $data['author'], 'title' => $data['permlink']]),
                 'img_url' => $img_url,
             ];
