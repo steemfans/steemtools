@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 
 if (!function_exists('steem_per_mvests')) {
     function steem_per_mvests() {
@@ -148,5 +149,15 @@ if (!function_exists('get_thumb_from_content')) {
             \Log::error($e);
             return $default_thumb;
         }
+    }
+}
+
+if (!function_exists('get_descption_from_content')) {
+    function get_description_from_content($content, $limit = 40) {
+        $content = strip_tags($content);//去除html标记
+        $content = str_replace(PHP_EOL, '', $content);
+        $pattern = "/&[a-zA-Z]+;/";//去除特殊符号
+        $content = preg_replace($pattern,'',$content);
+        return Str::limit($content, $limit);
     }
 }
