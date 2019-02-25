@@ -7,6 +7,7 @@
 <style>
     body {
         background-color: #fefefe !important;
+        word-break: break-all;
     }
     .post-content img {
         width: 100% !important;

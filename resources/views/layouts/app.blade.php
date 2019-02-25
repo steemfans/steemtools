@@ -23,7 +23,7 @@
         <meta name="theme-color" content="#ffffff">
 
         <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.min.css">
+        <!--<link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.min.css">-->
         @yield('customcss')
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         <script>

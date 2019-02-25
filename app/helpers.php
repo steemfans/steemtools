@@ -100,3 +100,22 @@ if (!function_exists('get_replies_by_account_and_title')) {
         });
     }
 }
+
+if (!function_exists('parse_content')) {
+    function parse_content($content) {
+        try {
+            // markdown
+            $parsedown = new \Parsedown();
+            $content = $parsedown->text($content);
+            // img proxy
+            $preg =  '/<img.*?src=[\"|\']?(.*?)[\"|\']?\s.*?>/i';
+            $img_proxy = 'https://img.steem.to0l.cn/';
+            $replace_str = '<img src="'.$img_proxy.'$1">';
+            $content = preg_replace($preg, $replace_str, $content);
+        } catch(\Exception $e) {
+            \Log::error($e);
+            $content = '';
+        }
+        return $content;
+    }
+}
