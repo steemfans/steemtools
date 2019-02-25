@@ -104,6 +104,10 @@ if (!function_exists('get_replies_by_account_and_title')) {
 if (!function_exists('parse_content')) {
     function parse_content($content) {
         try {
+            // find img url without <img> or ![]()
+            $preg =  '/((http(s?):)([\/|.|\w|\s|-])*\.(?:jpg|gif|png|jpeg))\s/i';
+            $replace_str = '![]($1)';
+            $content = preg_replace($preg, $replace_str, $content);
             // markdown
             $parsedown = new \Parsedown();
             $content = $parsedown->text($content);
