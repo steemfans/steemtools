@@ -21,17 +21,7 @@ class SteemPageController extends Controller
                 'updateTimelineShareData',
             ], false, false, true);
             // wx share
-            $default_img_url = 'https://steem.to0l.cn/img/steem.png';
-            $json_metadata = json_decode($post['result']['json_metadata'], true);
-            $img_url = '';
-            // if (isset($json_metadata['image'])) {
-            //     $img_url = $json_metadata['image'][0];
-            // } else {
-
-            // }
-            if (!$img_url) {
-                $img_url = $default_img_url;
-            }
+            $img_url = get_thumb_from_content($data['body']);
             $data['share_info'] = [
                 'title' => $data['title'],
                 'desc' => '点击使用 SteemTools 查看',
@@ -62,17 +52,7 @@ class SteemPageController extends Controller
                 'updateTimelineShareData',
             ], false, false, true);
             // wx share
-            $default_img_url = 'https://steem.to0l.cn/img/steem.png';
-            $json_metadata = json_decode($post['result']['json_metadata'], true);
-            $img_url = '';
-            // if (isset($json_metadata['image'])) {
-            //     $img_url = $json_metadata['image'][0];
-            // } else {
-
-            // }
-            if (!$img_url) {
-                $img_url = $default_img_url;
-            }
+            $img_url = get_thumb_from_content($data['body']);
             $data['share_info'] = [
                 'title' => '回复详情',
                 'desc' => '点击使用 SteemTools 查看',

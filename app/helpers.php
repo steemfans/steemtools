@@ -123,3 +123,30 @@ if (!function_exists('parse_content')) {
         return $content;
     }
 }
+
+if (!function_exists('get_account_history')) {
+    function get_account_history($account, $start = -1, $limit = 100) {
+        $data = '{"jsonrpc":"2.0", "method":"account_history_api.get_account_history", "params":{"account":"'.$account.'", "start":'.$start.', "limit":'.$limit.'}, "id":1}';
+        return post_data_steem_api($data);
+    }
+}
+
+if (!function_exists('get_thumb_from_content')) {
+    function get_thumb_from_content($content) {
+        $default_thumb = 'https://steem.to0l.cn/img/steem.png';
+        try {
+            $img_proxy = 'https://img.steem.to0l.cn/';
+            $preg =  '/(http(s?):)([\/|.|\w|\s|-])*\.(?:jpg|gif|png|jpeg)/i';
+            $matches = [];
+            preg_match($preg, $content, $matches);
+            if (isset($matches[0])) {
+                return $img_proxy.$matches[0];
+            } else {
+                return $default_thumb;
+            }
+        } catch(\Exception $e) {
+            \Log::error($e);
+            return $default_thumb;
+        }
+    }
+}
