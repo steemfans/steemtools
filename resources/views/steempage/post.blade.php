@@ -57,6 +57,7 @@
 @endsection
 
 @section('customjs')
+<script src="https://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
 <script>
 $(function(){
     const date = new Date(Number('{{ $created }}'));
@@ -67,6 +68,28 @@ $(function(){
     const m = (date.getMinutes() < 10 ? '0'+(date.getMinutes()) : date.getMinutes()) + ':';
     const s = date.getSeconds() < 10 ? '0'+(date.getSeconds()) : date.getSeconds();
     $('.time').html(Y+M+D+h+m+s);
-})
+
+    @if (isset($wx_config))
+    // wx jssdk
+    wx.config({!! $wx_config !!});
+    wx.ready(function () {
+        wx.updateAppMessageShareData({
+            title: '{{ $share_info["title"] }}',
+            desc: '{{ $share_info["desc"] }}',
+            link: '{{ $share_info["link"] }}',
+            imgUrl: '{{ $share_info["img_url"] }}',
+            success: function () {
+            }
+        });
+        wx.updateTimelineShareData({
+            title: '{{ $share_info["title"] }}',
+            link: '{{ $share_info["link"] }}',
+            imgUrl: '{{ $share_info["img_url"] }}',
+            success: function () {
+            }
+        });
+    });
+    @endif
+});
 </script>
 @endsection
