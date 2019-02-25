@@ -37,7 +37,8 @@ class BlockController extends Controller
                             // 引入微信SDK
                             $app = app('wechat.official_account');
                             $tmpl_id = getenv('WECHAT_TMPL_REPLY_ID');
-                            $reply_url = 'https://steemit.com/'.$parent_permlink.'/@'.$author.'/'.$permlink;
+                            // $reply_url = 'https://steemit.com/'.$parent_permlink.'/@'.$author.'/'.$permlink;
+                            $reply_url = route('steem_page_reply', ['author' => $author, 'title' => $permlink]);
                             // 发送微信模板消息
                             $app->template_message->send([
                                 'touser' => $user['wx_openid'],
