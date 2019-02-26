@@ -161,3 +161,19 @@ if (!function_exists('get_descption_from_content')) {
         return Str::limit($content, $limit);
     }
 }
+
+if (!function_exists('get_blogs_by_account')) {
+    function get_blogs_by_account($account, $start = 0, $limit = 10) {
+        $key = 'account_blog_list_' . $account . '_' . $start . '_' . $limit;
+        return Cache::get($key, function() use($account, $start, $limit) {
+            $data = '{"jsonrpc":"2.0", "method":"follow_api.get_blog", "params":{"account":"'.$account.'", "start_entry_id":'.$start.', "limit":'.$limit.'}, "id":1}';
+            $posts = post_data_steem_api($data);
+            if ($posts != false) {
+                // 5 minutes
+                Cache::put($key, $posts, 5);
+                return $posts;
+            }
+            return false;
+        });
+    }
+}
