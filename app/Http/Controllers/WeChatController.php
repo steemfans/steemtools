@@ -194,6 +194,15 @@ class WeChatController extends Controller
         if (stristr($msg['Content'], 'help')) {
             // 显示帮助信息
             return $this->helpMsg();
+        } else if (stristr($msg['Content'], 'https://steemit.com')) {
+            // 转换文章URL
+            $preg = '/https:\/\/steemit.com\/(.+)\/@(.+)\/(.+)/i';
+            $matches = [];
+            preg_match($preg, $msg['Content'], $matches);
+            if (count($matches) === 4) {
+                return 'https://steem.to0l.cn/steempage/post/@'.$matches[2].'/'.$matches[3];
+            }
+            return '网址格式不对';
         } else {
             switch ($msg['Content']) {
                 default:
