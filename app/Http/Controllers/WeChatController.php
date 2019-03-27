@@ -201,6 +201,7 @@ class WeChatController extends Controller
             preg_match($preg, $msg['Content'], $matches);
             if (count($matches) === 4) {
                 return 'https://steem.to0l.cn/steempage/post/@'.$matches[2].'/'.$matches[3];
+                return url('/steempage/post').'/@'.$matches[2].'/'.$matches[3];
             }
             return '网址格式不对';
         } else {
