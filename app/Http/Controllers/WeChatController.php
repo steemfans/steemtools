@@ -77,7 +77,7 @@ class WeChatController extends Controller
                     [
                         "type" => "view",
                         "name" => "开始",
-                        "url"  => "https://steem.to0l.cn/account/selector",
+                        "url"  => url('/account/selector'),
                     ],
                 ],
             ],
@@ -87,27 +87,27 @@ class WeChatController extends Controller
                     [
                         "type" => "view",
                         "name" => "Steem 指南",
-                        "url"  => "https://steem.to0l.cn/page/jump/steemh",
+                        "url"  => url('/page/jump/steemh'),
                     ],
                     [
                         "type" => "view",
                         "name" => "SteemYY",
-                        "url"  => "https://steem.to0l.cn/page/jump/steemyy",
+                        "url"  => url('/page/jump/steemyy'),
                     ],
                     [
                         "type" => "view",
                         "name" => "见证人",
-                        "url"  => "https://steem.to0l.cn/page/jump/witness",
+                        "url"  => url('/page/jump/witness'),
                     ],
                     [
                         "type" => "view",
                         "name" => "SteemGG",
-                        "url"  => "https://steem.to0l.cn/page/jump/steemgg",
+                        "url"  => url('/page/jump/steemgg'),
                     ],
                     [
                         "type" => "view",
                         "name" => "更多",
-                        "url"  => "https://steem.to0l.cn/page/more",
+                        "url"  => url('/page/more'),
                     ],
                 ],
             ],
