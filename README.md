@@ -1,5 +1,3 @@
-# steem-tools
-面向国人的Steem工具集
 
 # 部署
 
