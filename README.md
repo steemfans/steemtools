@@ -59,3 +59,9 @@ docker run -itd --name steem_watcher \
     ety001/steem-mention:latest
 ```
 > 其中`API_URL`是`php`端接收数据的接口，`STEEMD`是`steem api url`。
+
+## 配置图片反代
+
+文章和回复的独立页面中的图片使用了图片反向代理。
+
+具体部署参考这里 => [https://blog.domyself.me/2019/02/25/make-a-nodejs-proxy-package-by-docker.html](https://blog.domyself.me/2019/02/25/make-a-nodejs-proxy-package-by-docker.html)
