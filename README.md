@@ -38,6 +38,7 @@ STEEM_SC2_RETURN_URL=
 # 下面是 steem api
 STEEM_API=https://steemd.privex.io
 ```
+> 消息模板这块，需要确认下模板中涉及到的字段，是不是与代码里的一致。
 
 ## 导入数据库
 
