@@ -86,9 +86,10 @@ class BlockController extends Controller
                     try {
                         // 引入微信SDK
                         $app = app('wechat.official_account');
-                        $tmpl_id = getenv('WECHAT_TMPL_CHANGE_ID');
+                        $tmpl_id = getenv('WECHAT_TMPL_RECEIVE_ID');
+                        // $tmpl_id = getenv('WECHAT_TMPL_CHANGE_ID');
 
-                        $transfer_url = 'https://steemit.com/@'.$to.'/transfers';
+                        $transfer_url = 'https://steemitwallet.com/@'.$to.'/transfers';
                         // 发送微信模板消息
                         $app->template_message->send([
                             'touser' => $user['wx_openid'],
@@ -96,9 +97,9 @@ class BlockController extends Controller
                             'url' => $transfer_url,
                             'data' => [
                                 'first' => "{$to}，你收到了 {$from} 发给你的 {$amount}",
-                                'keyword1' => date('Y-m-d H:i:s', time()),
-                                'keyword2' => '收款',
-                                'keyword3' => $amount,
+                                'keyword3' => date('Y-m-d H:i:s', time()),
+                                'keyword1' => '收款',
+                                'keyword2' => $amount,
                                 'remark' => $memo
                                             ?
                                             "备注消息: {$memo}\n\n点击可以查看详情"
@@ -106,6 +107,22 @@ class BlockController extends Controller
                                             '点击可以查看详情',
                             ],
                         ]);
+                        // $app->template_message->send([
+                        //     'touser' => $user['wx_openid'],
+                        //     'template_id' => $tmpl_id,
+                        //     'url' => $transfer_url,
+                        //     'data' => [
+                        //         'first' => "{$to}，你收到了 {$from} 发给你的 {$amount}",
+                        //         'keyword1' => date('Y-m-d H:i:s', time()),
+                        //         'keyword2' => '收款',
+                        //         'keyword3' => $amount,
+                        //         'remark' => $memo
+                        //                     ?
+                        //                     "备注消息: {$memo}\n\n点击可以查看详情"
+                        //                     :
+                        //                     '点击可以查看详情',
+                        //     ],
+                        // ]);
                         $result = 'transfer to' . $to. ' and sent wx msg';
                         $code = 1;
                     } catch (Exception $e) {
