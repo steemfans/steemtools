@@ -37,7 +37,7 @@ class SteemController extends Controller
                     ->with('status0', '已经绑定过了');
             }
         } catch (\Exception $e) {
-            Log::error('bind_error', [$e->getMessage(), $request->input()]);
+            Log::error('bind_error', [$e->getMessage(), $sc_code, $request->input()]);
             return redirect('/account/selector')
                 ->with('status0', '绑定失败, '.$e->getMessage());
         }
