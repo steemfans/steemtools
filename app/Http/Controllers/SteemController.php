@@ -26,7 +26,7 @@ class SteemController extends Controller
                     'sc_code' => $sc_code,
                     'sc_access_token' => '',
                     'sc_refresh_token' => '',
-                    'sc_expires_in' => '',
+                    'sc_expires_in' => 0,
                     'settings' => json_encode([]),
                     'userinfo' => json_encode($wx_userinfo),
                 ];
