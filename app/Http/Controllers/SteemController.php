@@ -13,19 +13,20 @@ class SteemController extends Controller
         $wx_openid = $wx_userinfo->id;
         $sc_code = $request->input('code');
         // var_dump($sc_code);die();
+        $steem_username = $request->input('username');
         try {
             $sc2 = app('sc2.client');
-            $token = $sc2->auth()->parseReturn($sc_code)->toArray();
+            // $token = $sc2->auth()->parseReturn($sc_code)->toArray();
             $wxuser = WxUsers::where('wx_openid', $wx_openid)
-                        ->where('username', $token['username'])->first();
+                        ->where('username', $steem_username)->first();
             if (!$wxuser) {
                 $waiting_to_insert = [
-                    'username' => $token['username'],
+                    'username' => $steem_username,
                     'wx_openid' => $wx_openid,
                     'sc_code' => $sc_code,
-                    'sc_access_token' => $token['access_token'],
-                    'sc_refresh_token' => $token['refresh_token'],
-                    'sc_expires_in' => $token['expires'],
+                    'sc_access_token' => '',
+                    'sc_refresh_token' => '',
+                    'sc_expires_in' => '',
                     'settings' => json_encode([]),
                     'userinfo' => json_encode($wx_userinfo),
                 ];
