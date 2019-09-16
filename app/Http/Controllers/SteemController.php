@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\WxUsers;
+use Log;
 
 class SteemController extends Controller
 {
@@ -36,6 +37,7 @@ class SteemController extends Controller
                     ->with('status0', '已经绑定过了');
             }
         } catch (\Exception $e) {
+            Log::error('bind_error', [$e->getMessage(), $request->input()]);
             return redirect('/account/selector')
                 ->with('status0', '绑定失败, '.$e->getMessage());
         }
