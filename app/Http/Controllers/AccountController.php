@@ -32,7 +32,7 @@ class AccountController extends Controller
         $auth_url = $sc2->auth()->getAuthorizationUrl();
         
         // 替换成国内源
-        $auth_url = str_replace('beta.steemconnect.com', 'steemconnect.cocozl.cn', $auth_url);
+        $auth_url = str_replace('steemconnect.com', 'steemconnect.cocozl.cn', $auth_url);
 
         return response()->view(
             'account/selector',
