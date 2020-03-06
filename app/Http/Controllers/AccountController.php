@@ -30,6 +30,9 @@ class AccountController extends Controller
         // 获取 steem 的授权地址
         $sc2 = app('sc2.client');
         $auth_url = $sc2->auth()->getAuthorizationUrl();
+        
+        // 替换成国内源
+        $auth_url = str_replace('beta.steemconnect.com', 'steemconnect.cocozl.cn', $auth_url);
 
         return response()->view(
             'account/selector',
