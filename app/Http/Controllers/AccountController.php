@@ -54,13 +54,14 @@ class AccountController extends Controller
                     ->first();
 
         if ($wxuser) {
+            $sc2_id = env('STEEM_SC2_ID', 'steemtools.app');
             $wxuser->delete();
             return response()->view(
                 'account/unbind',
                 [
                     'wx_userinfo' => $wx_userinfo,
                     'username' => $wxuser->username,
-                    'unbind_url' => 'https://steemconnect.com/revoke/@steemtools.app',
+                    'unbind_url' => 'https://steemconnect.cocozl.cn/revoke/@'.$sc2_id,
                 ],
                 200
             );
