@@ -101,11 +101,6 @@ class WeChatController extends Controller
                     ],
                     [
                         "type" => "view",
-                        "name" => "SteemGG",
-                        "url"  => url('/page/jump/steemgg'),
-                    ],
-                    [
-                        "type" => "view",
                         "name" => "更多",
                         "url"  => url('/page/more'),
                     ],
@@ -145,11 +140,6 @@ class WeChatController extends Controller
                         "type" => "view",
                         "name" => "见证人",
                         "url"  => "https://test.to0l.cn/page/jump/witness",
-                    ],
-                    [
-                        "type" => "view",
-                        "name" => "SteemGG",
-                        "url"  => "https://test.to0l.cn/page/jump/steemgg",
                     ],
                     [
                         "type" => "view",
