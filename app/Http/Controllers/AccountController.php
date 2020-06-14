@@ -32,7 +32,7 @@ class AccountController extends Controller
         $auth_url = $sc2->auth()->getAuthorizationUrl();
         
         // 替换成国内源
-        $auth_url = str_replace('steemconnect.com', 'steemconnect.cocozl.cn', $auth_url);
+        $auth_url = str_replace('steemconnect.com', 'steemconnect.wherein.mobi', $auth_url);
 
         return response()->view(
             'account/selector',
@@ -61,7 +61,7 @@ class AccountController extends Controller
                 [
                     'wx_userinfo' => $wx_userinfo,
                     'username' => $wxuser->username,
-                    'unbind_url' => 'https://steemconnect.cocozl.cn/revoke/@'.$sc2_id,
+                    'unbind_url' => 'https://steemconnect.wherein.mobi/revoke/@'.$sc2_id,
                 ],
                 200
             );
