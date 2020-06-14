@@ -114,7 +114,7 @@ if (!function_exists('parse_content')) {
             $content = $parsedown->text($content);
             // img proxy
             $preg =  '/<img.*?src=[\"|\']?(.*?)[\"|\']?\s.*?>/i';
-            $img_proxy = 'https://img.steemtools.top/';
+            $img_proxy = getenv('IMG_PROXY') ? getenv('IMG_PROXY') : 'https://img.steemtools.top/';
             $replace_str = '<img src="'.$img_proxy.'$1">';
             $content = preg_replace($preg, $replace_str, $content);
         } catch(\Exception $e) {
@@ -136,7 +136,7 @@ if (!function_exists('get_thumb_from_content')) {
     function get_thumb_from_content($content) {
         $default_thumb = 'https://steemtools.top/img/steem.png';
         try {
-            $img_proxy = 'https://img.steemtools.top/';
+            $img_proxy = getenv('IMG_PROXY') ? getenv('IMG_PROXY') : 'https://img.steemtools.top/';
             $preg =  '/(http(s?):)([\/|.|\w|\s|-])*\.(?:jpg|gif|png|jpeg)/i';
             $matches = [];
             preg_match($preg, $content, $matches);
