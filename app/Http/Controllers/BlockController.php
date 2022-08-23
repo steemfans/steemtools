@@ -89,7 +89,7 @@ class BlockController extends Controller
                         $tmpl_id = getenv('WECHAT_TMPL_RECEIVE_ID');
                         // $tmpl_id = getenv('WECHAT_TMPL_CHANGE_ID');
 
-                        $transfer_url = 'https://steemitwallet.com/@'.$to.'/transfers';
+                        $transfer_url = 'https://steemdb.io/@'.$to.'/transfers';
                         // 发送微信模板消息
                         $app->template_message->send([
                             'touser' => $user['wx_openid'],
@@ -158,7 +158,7 @@ class BlockController extends Controller
                         $app = app('wechat.official_account');
                         $tmpl_id = getenv('WECHAT_TMPL_CHANGE_ID');
 
-                        $delegate_url = 'https://steemd.com/@'.$delegatee;
+                        $delegate_url = 'https://steemdb.io/@'.$delegatee.'/proxied';
                         $steem_per_mvest = Settings::steem_per_mvests();
                         if ($steem_per_mvest) {
                             $tmp_vests = explode(' ', $vesting_shares);
@@ -215,7 +215,7 @@ class BlockController extends Controller
                         $app = app('wechat.official_account');
                         $tmpl_id = getenv('WECHAT_TMPL_CHANGE_ID');
 
-                        $witness_url = 'https://steemd.com/@'.$witness;
+                        $witness_url = 'https://steemdb.io/@'.$witness.'/witness';
                         // 发送微信模板消息
                         $app->template_message->send([
                             'touser' => $user['wx_openid'],
